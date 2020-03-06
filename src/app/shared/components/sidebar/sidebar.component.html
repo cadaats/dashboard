@@ -1,1 +1,33 @@
-<p>sidebar works!</p>
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h1>Guess Me</h1>
+    </div>
+    <img
+      src="https://tse1.mm.bing.net/th?id=AMMS_f8a437a5e28442e2c6bfc475e54e5fad&w=183&h=183&c=12&rs=1&o=5&pid=3.1&rm=2"
+      alt="James Harden"/>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Pages</h2>
+
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/">Dashboard</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/posts">Posts</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/articles">Articles</a>
+
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>Tools</h2>
+
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+        <mat-icon>import_contacts</mat-icon>
+        Contacts
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+        <mat-icon>contact_phone</mat-icon>
+        Leads
+    </a>
+
+</mat-nav-list>

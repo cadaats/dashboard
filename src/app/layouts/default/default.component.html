@@ -1,6 +1,6 @@
-<db-header></db-header>
+<db-header (toggleSideBarForMe)="sidebarToggler()"></db-header>
 <mat-drawer-container>
-  <mat-drawer mode="side" opened>
+  <mat-drawer mode="side" [opened]='sidebarOpen'>
     <db-sidebar></db-sidebar>
   </mat-drawer>
   <mat-drawer-content>
