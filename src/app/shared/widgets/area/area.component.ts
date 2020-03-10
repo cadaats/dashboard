@@ -3,7 +3,7 @@ import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 
 @Component({
-  selector: 'db-widget-area',
+  selector: 'db-widgets-area',
   templateUrl: './area.component.html',
   styleUrls: ['./area.component.scss']
 })
