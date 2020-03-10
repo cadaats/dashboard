@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 
@@ -10,6 +10,11 @@ import HC_exporting from 'highcharts/modules/exporting';
 export class CardComponent implements OnInit {
   chartOptions: {};
   Highcharts = Highcharts;
+  @Input() label: string;
+  @Input() total: string;
+  @Input() percentage: string;
+  @Input() data = [];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -19,7 +24,7 @@ export class CardComponent implements OnInit {
           backgroundColor: null,
           borderWidth: 0,
           margin: [2, 2, 2, 2],
-          height: 60
+          height: 80
       },
       title: {
           text: null
@@ -63,7 +68,7 @@ export class CardComponent implements OnInit {
 
       },
      series: [{
-       data: [71, 78, 39, 36]
+       data: this.data
      }]
   };
     HC_exporting(Highcharts);

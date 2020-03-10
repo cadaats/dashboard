@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DefaultComponent implements OnInit {
   sidebarOpen = true;
+
   constructor() { }
 
   ngOnInit(): void {
