@@ -14,10 +14,10 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    this.tableData = this.dashboardService.tableData();
     this.bigChart = this.dashboardService.bigChart();
     this.cardCharts = this.dashboardService.cardCharts();
     this.pieChart = this.dashboardService.pieChart();
-    this.tableData = this.dashboardService.tableData();
   }
 
 }
