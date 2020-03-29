@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
+import { BigChart } from 'src/app/shared/models/bigchart';
 
 @Component({
   selector: 'db-dashboard',
@@ -7,7 +8,7 @@ import { DashboardService } from '../dashboard.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  bigChart = [];
+  bigChart: BigChart[];
   cardCharts = [];
   pieChart = [];
   tableData = [];
@@ -15,7 +16,16 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableData = this.dashboardService.tableData();
-    this.bigChart = this.dashboardService.bigChart();
+    // this.bigChart = this.dashboardService.bigChart();
+    // console.log(this.bigChart);
+    this.dashboardService.bigChart().subscribe((data) => {
+      // for (const item of data) {
+      //   // const element = data[index];
+      //   console.log(item.name);
+      // }
+      // console.log(data);
+      this.bigChart = data;
+    });
     this.cardCharts = this.dashboardService.cardCharts();
     this.pieChart = this.dashboardService.pieChart();
   }
