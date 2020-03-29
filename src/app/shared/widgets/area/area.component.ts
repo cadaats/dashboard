@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import { BigChart } from '../../models/bigchart';
+import { AreaData } from '../../models/AreaData';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { BigChart } from '../../models/bigchart';
 export class AreaComponent implements OnInit, OnChanges {
 
   chartOptions: {};
-  @Input() data: BigChart[];
+  @Input() data: AreaData[];
   updateFlag = false;
   Highcharts = Highcharts;
 

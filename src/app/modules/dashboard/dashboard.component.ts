@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { BigChart } from 'src/app/shared/models/bigchart';
+import { AreaData } from 'src/app/shared/models/AreaData';
+import { PieData } from 'src/app/shared/models/piedata';
 
 @Component({
   selector: 'db-dashboard',
@@ -8,26 +9,23 @@ import { BigChart } from 'src/app/shared/models/bigchart';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  bigChart: BigChart[];
+  bigChart: AreaData[];
   cardCharts = [];
-  pieChart = [];
+  pieChart: PieData[];
   tableData = [];
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
     this.tableData = this.dashboardService.tableData();
-    // this.bigChart = this.dashboardService.bigChart();
-    // console.log(this.bigChart);
+
     this.dashboardService.bigChart().subscribe((data) => {
-      // for (const item of data) {
-      //   // const element = data[index];
-      //   console.log(item.name);
-      // }
-      // console.log(data);
       this.bigChart = data;
     });
     this.cardCharts = this.dashboardService.cardCharts();
-    this.pieChart = this.dashboardService.pieChart();
+
+    this.dashboardService.pieChart().subscribe((data) => {
+      this.pieChart = data;
+    });
   }
 
 }
