@@ -13,10 +13,11 @@ export class PieComponent implements OnInit, OnChanges {
   chartOptions: {};
   Highcharts = Highcharts;
   @Input() data: PieData[];
-
+  updateFlag = false;
   constructor() { }
 
   ngOnInit(): void {
+    this.bindChartData(this.data);
     HC_exporting(Highcharts);
 
     setTimeout(() => {
@@ -31,13 +32,15 @@ export class PieComponent implements OnInit, OnChanges {
       if (!change.isFirstChange()) {
         console.log('change detected in Pie data: ');
         this.bindChartData(change.currentValue);
-        console.log('Pie Chart Options');
-        console.log(this.chartOptions);
+        // console.log('Pie Chart Options');
+        // console.log(this.chartOptions);
       }
     }
   }
 
   bindChartData(chartData: any) {
+    console.log('Binding Chart Data');
+    console.log(this.data);
     this.chartOptions =  {
       chart: {
           plotBackgroundColor: null,
@@ -68,6 +71,9 @@ export class PieComponent implements OnInit, OnChanges {
       },
       series: chartData[0]
     };
+
+    console.log('Pie Chart Options');
+    console.log(this.chartOptions);
   }
 
 }

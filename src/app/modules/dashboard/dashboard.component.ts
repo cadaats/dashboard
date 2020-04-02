@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     });
     this.cardCharts = this.dashboardService.cardCharts();
 
+    // this.pieChart = this.dashboardService.pieCharts();
     this.dashboardService.pieChart().subscribe((data) => {
       this.pieChart = data;
     });
