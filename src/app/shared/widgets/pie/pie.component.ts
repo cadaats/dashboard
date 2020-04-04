@@ -17,7 +17,6 @@ export class PieComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.bindChartData(this.data);
     HC_exporting(Highcharts);
 
     setTimeout(() => {
@@ -32,8 +31,6 @@ export class PieComponent implements OnInit, OnChanges {
       if (!change.isFirstChange()) {
         console.log('change detected in Pie data: ');
         this.bindChartData(change.currentValue);
-        // console.log('Pie Chart Options');
-        // console.log(this.chartOptions);
       }
     }
   }
@@ -69,11 +66,8 @@ export class PieComponent implements OnInit, OnChanges {
               }
           }
       },
-      series: chartData[0]
+      series: JSON.parse(JSON.stringify(chartData))
     };
-
-    console.log('Pie Chart Options');
-    console.log(this.chartOptions);
   }
 
 }
