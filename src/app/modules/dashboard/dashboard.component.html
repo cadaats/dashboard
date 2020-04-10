@@ -1,4 +1,9 @@
-<div *ngIf="bigChart$ | async as areaChart">
+<ng-template #loading>
+  Loading stuff...
+</ng-template>
+
+
+<div *ngIf="bigChart$ | async as areaChart; else loading">
   <db-widgets-area  [data]="areaChart"></db-widgets-area>
 </div>
 <br>
@@ -25,7 +30,7 @@
   <div fxFlex=60>
     <db-widgets-table [data]="tableData"></db-widgets-table>
   </div>
-  <div fxFlex=40 *ngIf="(pieChart$ | async) as pieData">
+  <div fxFlex=40 *ngIf="(pieChart$ | async) as pieData; else loading">
     <db-widgets-pie [data] = "pieData"></db-widgets-pie>
   </div>
 </div>

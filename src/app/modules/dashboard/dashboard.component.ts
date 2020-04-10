@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
 import { AreaData } from 'src/app/shared/models/AreaData';
 import { PieData } from 'src/app/shared/models/piedata';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'db-dashboard',
@@ -14,6 +15,8 @@ export class DashboardComponent implements OnInit {
   cardCharts = [];
   pieChart$: Observable<PieData[]>;
   tableData = [];
+  errorMessage: string;
+
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
@@ -24,7 +27,14 @@ export class DashboardComponent implements OnInit {
     // });
 
     // using async pipes
-    this.bigChart$ =  this.dashboardService.bigChart();
+    this.bigChart$ =  this.dashboardService.bigChart()
+                        .pipe(
+                          catchError(err => {
+                            this.errorMessage = err;
+                            console.log(this.errorMessage);
+                            return EMPTY; // Inorder for observable to terminate normally, an EMPTY or a default object is to be returned.
+                          })
+                        );
     this.cardCharts = this.dashboardService.cardCharts();
 
     // this.pieChart = this.dashboardService.pieCharts(); //traditional approach
@@ -35,7 +45,13 @@ export class DashboardComponent implements OnInit {
     // });
 
     // using async pipes
-    this.pieChart$ = this.dashboardService.pieChart();
+    this.pieChart$ = this.dashboardService.pieChart()
+                    .pipe(
+                      catchError(err => {
+                        this.errorMessage = err;
+                        return EMPTY;
+                      })
+                    );
   }
 
 }

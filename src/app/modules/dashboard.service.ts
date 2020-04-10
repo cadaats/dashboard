@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { AreaData } from '../shared/models/AreaData';
 import { PieData } from '../shared/models/piedata';
 import { TableData } from '../shared/models/tabledata';
@@ -12,8 +13,54 @@ export class DashboardService {
 
   constructor(private httpClient: HttpClient) { }
   bigChart(): Observable<AreaData[]> {
-    return this.httpClient.get<AreaData[]>('http://localhost:59854/api/dashboard/big');
+    return this.httpClient.get<AreaData[]>('http://localhost:59854/api/dashboard/big')
+            .pipe(
+                tap(data => console.log('Area chart data received: ', JSON.stringify(data))),
+                catchError(this.handleError)
+              );
   }
+
+  cardCharts() {
+    return [71, 78, 39, 36];
+  }
+
+  //#region Old Json Data
+  // pieCharts() {
+  //   return [{
+  //     name: 'Brands',
+  //     colorByPoint: true,
+  //     data: [{
+  //         name: 'Chrome',
+  //         y: 61.41,
+  //         sliced: true,
+  //         selected: true
+  //     }, {
+  //         name: 'Internet Explorer',
+  //         y: 11.84
+  //     }, {
+  //         name: 'Firefox',
+  //         y: 10.85
+  //     }, {
+  //         name: 'Edge',
+  //         y: 4.67
+  //     }, {
+  //         name: 'Safari',
+  //         y: 4.18
+  //     }, {
+  //         name: 'Sogou Explorer',
+  //         y: 1.64
+  //     }, {
+  //         name: 'Opera',
+  //         y: 1.6
+  //     }, {
+  //         name: 'QQ',
+  //         y: 1.2
+  //     }, {
+  //         name: 'Other',
+  //         y: 2.61
+  //     }]
+  //   }];
+  // }
 
   // bigChart() {
   //   return [{
@@ -33,48 +80,14 @@ export class DashboardService {
   //     data: [2, 2, 2, 6, 13, 30, 46]
   //   }];
   // }
-  cardCharts() {
-    return [71, 78, 39, 36];
-  }
+  //#endregion
 
-  pieCharts() {
-    return [{
-      name: 'Brands',
-      colorByPoint: true,
-      data: [{
-          name: 'Chrome',
-          y: 61.41,
-          sliced: true,
-          selected: true
-      }, {
-          name: 'Internet Explorer',
-          y: 11.84
-      }, {
-          name: 'Firefox',
-          y: 10.85
-      }, {
-          name: 'Edge',
-          y: 4.67
-      }, {
-          name: 'Safari',
-          y: 4.18
-      }, {
-          name: 'Sogou Explorer',
-          y: 1.64
-      }, {
-          name: 'Opera',
-          y: 1.6
-      }, {
-          name: 'QQ',
-          y: 1.2
-      }, {
-          name: 'Other',
-          y: 2.61
-      }]
-    }];
-  }
     pieChart(): Observable<PieData[]>  {
-      return this.httpClient.get<PieData[]>('http://localhost:59854/api/dashboard/pie');
+      return this.httpClient.get<PieData[]>('http://localhost:59854/api/dashboard/pie')
+      .pipe(
+        tap(data => console.log('Area chart data received: ', JSON.stringify(data))),
+        catchError(this.handleError)
+      );
   }
 
   tableData() {
@@ -100,5 +113,18 @@ export class DashboardService {
       {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
       {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
     ];
+  }
+
+  handleError(err: any) {
+    let errorMessage: string;
+    if (err.error instanceof ErrorEvent) {
+      // A client side or network error occured
+      errorMessage = `An error occured: ${err.error.message}`;
+    } else {
+      // Backend returned an error
+      errorMessage = `Backend returned an error, code ${err.status}: ${err.error}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }
