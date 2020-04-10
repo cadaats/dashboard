@@ -9,7 +9,7 @@ import { AreaData } from '../../models/AreaData';
   templateUrl: './area.component.html',
   styleUrls: ['./area.component.scss']
 })
-export class AreaComponent implements OnInit, OnChanges {
+export class AreaComponent implements OnInit {
 
   chartOptions: {};
   @Input() data: AreaData[];
@@ -21,22 +21,13 @@ export class AreaComponent implements OnInit, OnChanges {
   ngOnInit() {
     HC_exporting(Highcharts);
 
+    this.bindChartData(this.data);
+
     setTimeout(() => {
       window.dispatchEvent(
         new Event('resize')
       );
     }, 300);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (typeof changes.data !== 'undefined') {
-      const change = changes.data;
-      if (!change.isFirstChange()) {
-        console.log('change detected in area data: ');
-        this.bindChartData(change.currentValue);
-        console.log(this.chartOptions);
-      }
-    }
   }
 
   bindChartData(chartData: any) {

@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import { PieData } from '../../models/piedata';
-import { Datum } from '../../models/datum';
 
 @Component({
   selector: 'db-widgets-pie',
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.scss']
 })
-export class PieComponent implements OnInit, OnChanges {
+export class PieComponent implements OnInit {
   chartOptions: {};
   Highcharts = Highcharts;
   @Input() data: PieData[];
@@ -19,21 +18,12 @@ export class PieComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     HC_exporting(Highcharts);
 
+    this.bindChartData(this.data);
+
     setTimeout(() => {
         window.dispatchEvent(new Event('resize'));
       }, 300);
     }
-
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (typeof changes.data !== 'undefined') {
-      const change = changes.data;
-      if (!change.isFirstChange()) {
-        console.log('change detected in Pie data: ');
-        this.bindChartData(change.currentValue);
-      }
-    }
-  }
 
   bindChartData(chartData: any) {
     console.log('Binding Chart Data');

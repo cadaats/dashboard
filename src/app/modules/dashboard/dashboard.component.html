@@ -1,5 +1,5 @@
-<div>
-  <db-widgets-area  [data]="bigChart"></db-widgets-area>
+<div *ngIf="bigChart$ | async as areaChart">
+  <db-widgets-area  [data]="areaChart"></db-widgets-area>
 </div>
 <br>
 <mat-divider></mat-divider>
@@ -25,8 +25,8 @@
   <div fxFlex=60>
     <db-widgets-table [data]="tableData"></db-widgets-table>
   </div>
-  <div fxFlex=40>
-    <db-widgets-pie [data] = "pieChart"></db-widgets-pie>
+  <div fxFlex=40 *ngIf="(pieChart$ | async) as pieData">
+    <db-widgets-pie [data] = "pieData"></db-widgets-pie>
   </div>
 </div>
 <br>
