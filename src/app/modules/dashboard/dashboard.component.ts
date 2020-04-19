@@ -1,57 +1,71 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { AreaData } from 'src/app/shared/models/AreaData';
-import { PieData } from 'src/app/shared/models/piedata';
-import { Observable, EMPTY } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'db-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit {
-  bigChart$: Observable<AreaData[]>;
-  cardCharts = [];
-  pieChart$: Observable<PieData[]>;
-  tableData = [];
+export class DashboardComponent {
+  // cardCharts = [];
+  // tableData = [];
   errorMessage: string;
+
+  bigChart$ =  this.dashboardService.areaData$
+                    .pipe(
+                        catchError(err => {
+                          this.errorMessage = err;
+                          console.log(this.errorMessage);
+                          return EMPTY; // Inorder for observable to terminate normally, an EMPTY or a default object is to be returned.
+                        })
+                      );
+
+    pieChart$ = this.dashboardService.pieData$
+              .pipe(
+                catchError(err => {
+                  this.errorMessage = err;
+                  return EMPTY;
+                })
+              );
+
+    tableData$ = this.dashboardService.tableData$
+    .pipe(
+      catchError(err => {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+
+    cardData$ = this.dashboardService.cardData$
+    .pipe(
+      catchError(err => {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
 
   constructor(private dashboardService: DashboardService) { }
 
-  ngOnInit(): void {
-    this.tableData = this.dashboardService.tableData();
+  // ngOnInit(): void {
+  //   // this.tableData = this.dashboardService.tableData();
 
-    // this.dashboardService.bigChart().subscribe((data) => {
-    //   this.bigChart = data;
-    // });
+  //   // this.dashboardService.bigChart().subscribe((data) => {
+  //   //   this.bigChart = data;
+  //   // });
 
-    // using async pipes
-    this.bigChart$ =  this.dashboardService.bigChart()
-                        .pipe(
-                          catchError(err => {
-                            this.errorMessage = err;
-                            console.log(this.errorMessage);
-                            return EMPTY; // Inorder for observable to terminate normally, an EMPTY or a default object is to be returned.
-                          })
-                        );
-    this.cardCharts = this.dashboardService.cardCharts();
+  //   //
 
-    // this.pieChart = this.dashboardService.pieCharts(); //traditional approach
+  //   // this.cardCharts = this.dashboardService.cardCharts();
 
-    // using subscribe
-    // this.dashboardService.pieChart().subscribe((data) => {
-    //   this.pieChart = data;
-    // });
+  //   // this.pieChart = this.dashboardService.pieCharts(); //traditional approach
 
-    // using async pipes
-    this.pieChart$ = this.dashboardService.pieChart()
-                    .pipe(
-                      catchError(err => {
-                        this.errorMessage = err;
-                        return EMPTY;
-                      })
-                    );
-  }
+  //   // using subscribe
+  //   // this.dashboardService.pieChart().subscribe((data) => {
+  //   //   this.pieChart = data;
+  //   // });
+  // }
 
 }

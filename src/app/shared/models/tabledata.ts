@@ -1,3 +1,6 @@
 export interface TableData {
-  name: string;
+  position?: number;
+  name?: string;
+  weight?: number;
+  symbol?: string;
 }

@@ -1,4 +1,4 @@
 export interface Datum {
   name: string;
-  y: number;
+  usage: number;
 }

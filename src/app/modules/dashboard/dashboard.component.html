@@ -9,7 +9,7 @@
 <br>
 <mat-divider></mat-divider>
 <br>
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards" *ngIf="(cardData$ | async) as cardCharts; else loading">
   <mat-card fxFlex="25">
     <db-widgets-card label="Users" total="18k" percentage="30" [data]="cardCharts"></db-widgets-card>
   </mat-card>
@@ -27,7 +27,7 @@
 <mat-divider></mat-divider>
 <br>
 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-  <div fxFlex=60>
+  <div fxFlex=60 *ngIf="tableData$ | async as tableData; else loading">
     <db-widgets-table [data]="tableData"></db-widgets-table>
   </div>
   <div fxFlex=40 *ngIf="(pieChart$ | async) as pieData; else loading">

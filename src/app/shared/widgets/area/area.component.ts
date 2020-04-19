@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import { AreaData } from '../../models/AreaData';
@@ -7,7 +7,8 @@ import { AreaData } from '../../models/AreaData';
 @Component({
   selector: 'db-widgets-area',
   templateUrl: './area.component.html',
-  styleUrls: ['./area.component.scss']
+  styleUrls: ['./area.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AreaComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import { PieData } from '../../models/piedata';
@@ -6,7 +6,8 @@ import { PieData } from '../../models/piedata';
 @Component({
   selector: 'db-widgets-pie',
   templateUrl: './pie.component.html',
-  styleUrls: ['./pie.component.scss']
+  styleUrls: ['./pie.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PieComponent implements OnInit {
   chartOptions: {};
